@@ -1,0 +1,11 @@
+ng-form {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+:host {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
