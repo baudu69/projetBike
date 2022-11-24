@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,9 +21,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         prePostEnabled = true)
 public class WebSecurityConfig {
     private final AuthEntryPointJwt unauthorizedHandler;
+    private final BikeConfig bikeConfig;
 
-    public WebSecurityConfig(AuthEntryPointJwt unauthorizedHandler) {
+    public WebSecurityConfig(AuthEntryPointJwt unauthorizedHandler, BikeConfig bikeConfig) {
         this.unauthorizedHandler = unauthorizedHandler;
+        this.bikeConfig = bikeConfig;
     }
 
     @Bean
@@ -34,14 +37,14 @@ public class WebSecurityConfig {
     @Bean
     public AuthenticationManager authenticationManagerBean(HttpSecurity http)
             throws Exception {
-            return http.getSharedObject(AuthenticationManagerBuilder.class)
-                    .inMemoryAuthentication()
-                    .withUser("userepul")
-                    .password(passwordEncoder().encode("epul"))
-                    .authorities("ROLE_USER")
-                    .and()
-                    .and()
-                    .build();
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .inMemoryAuthentication()
+                .withUser(this.bikeConfig.getDefaultUser())
+                .password(passwordEncoder().encode(this.bikeConfig.getDefaultPassword()))
+                .authorities("ROLE_USER")
+                .and()
+                .and()
+                .build();
     }
 
     @Bean
@@ -51,13 +54,17 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
+        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests()
-                .antMatchers("/swagger-ui/**", "/v3/**").permitAll()
-                .antMatchers("/api/auth/signIn").permitAll()
-                .anyRequest().authenticated();
+                .authorizeRequests();
+        if (bikeConfig.isSecurityEnabled()) {
+            registry.antMatchers("/swagger-ui/**", "/v3/**").permitAll()
+                    .antMatchers("/api/auth/signIn").permitAll()
+                    .anyRequest().authenticated();
+        } else {
+            registry.anyRequest().permitAll();
+        }
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

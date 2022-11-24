@@ -32,7 +32,7 @@ public class Sortie {
     @Column(name = "distance_parcourue", precision = 6, scale = 2)
     private BigDecimal distanceParcourue;
 
-    @OneToMany(mappedBy = "numSortie")
+    @OneToMany(mappedBy = "sortie")
     private Set<Etape> etapes = new LinkedHashSet<>();
 
     public Set<Etape> getEtapes() {

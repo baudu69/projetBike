@@ -13,9 +13,13 @@ import java.util.Date;
 
 @Component
 public class JwtUtils {
-
-    private static final String secret = "ndfjshfusdbfhsdbfhsdvfhsd";
+    
+    private final BikeConfig bikeConfig;
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
+
+    public JwtUtils(BikeConfig bikeConfig) {
+        this.bikeConfig = bikeConfig;
+    }
 
     public String generateJwtToken(Authentication authentication) {
         UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
@@ -23,17 +27,17 @@ public class JwtUtils {
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
                 .setExpiration(Date.from(LocalDateTime.now().plus(1, java.time.temporal.ChronoUnit.HOURS).atZone(ZoneId.systemDefault()).toInstant()))
-                .signWith(SignatureAlgorithm.HS512, secret)
+                .signWith(SignatureAlgorithm.HS512, this.bikeConfig.getSecret())
                 .compact();
     }
 
     public String getUserNameFromJwtToken(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser().setSigningKey(this.bikeConfig.getSecret()).parseClaimsJws(token).getBody().getSubject();
     }
 
     public boolean validateJwtToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(this.bikeConfig.getSecret()).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e) {
             logger.error("Invalid JWT signature: {}", e.getMessage());

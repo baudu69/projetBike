@@ -1,0 +1,18 @@
+{
+  "properties": [
+    {
+      "name": "bike.securityEnabled",
+      "type": "java.lang.Boolean",
+      "description": "False pour désactiver la sécurité."
+    },
+    {
+      "name": "bike.defaultUser",
+      "type": "java.lang.String",
+      "description": "Identifiant de l'utilisateur par défaut."
+    },
+    {
+      "name": "bike.defaultPassword",
+      "type": "java.lang.String",
+      "description": "Mot de passe de l'utilisateur par défaut."
+    }
+  ] }

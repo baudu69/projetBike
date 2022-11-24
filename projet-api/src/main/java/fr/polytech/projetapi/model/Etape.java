@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @Table(name = "etape")
 public class Etape {
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id_etape", nullable = false)
     private Integer id;
 
@@ -24,17 +25,20 @@ public class Etape {
     @Column(name = "longitude", precision = 16, scale = 14)
     private BigDecimal longitude;
 
+    @Column(name = "num_sortie", nullable = false)
+    private Integer numSortie;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "num_sortie")
-    private Sortie numSortie;
+    @JoinColumn(name = "num_sortie", insertable = false, updatable = false)
+    private Sortie sortie;
 
-    public Sortie getNumSortie() {
-        return numSortie;
+    public Sortie getSortie() {
+        return sortie;
     }
 
-    public void setNumSortie(Sortie numSortie) {
-        this.numSortie = numSortie;
+    public void setSortie(Sortie numSortie) {
+        this.sortie = numSortie;
     }
 
     public Integer getId() {
@@ -77,4 +81,11 @@ public class Etape {
         this.longitude = longitude;
     }
 
+    public Integer getNumSortie() {
+        return numSortie;
+    }
+
+    public void setNumSortie(Integer numSortie) {
+        this.numSortie = numSortie;
+    }
 }
