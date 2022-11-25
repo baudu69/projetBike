@@ -1,8 +1,11 @@
 package fr.polytech.projetapi.config;
 
+import fr.polytech.projetapi.service.UserDetailsServiceImpl;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,16 +38,8 @@ public class WebSecurityConfig {
 
 
     @Bean
-    public AuthenticationManager authenticationManagerBean(HttpSecurity http)
-            throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .inMemoryAuthentication()
-                .withUser(this.bikeConfig.getDefaultUser())
-                .password(passwordEncoder().encode(this.bikeConfig.getDefaultPassword()))
-                .authorities("ROLE_USER")
-                .and()
-                .and()
-                .build();
+    public AuthenticationManager authenticationManagerBean() {
+        return authentication -> new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials());
     }
 
     @Bean
@@ -60,17 +55,12 @@ public class WebSecurityConfig {
                 .authorizeRequests();
         if (bikeConfig.isSecurityEnabled()) {
             registry.antMatchers("/swagger-ui/**", "/v3/**").permitAll()
-                    .antMatchers("/api/auth/signIn").permitAll()
+                    .antMatchers("/api/auth/signIn", "/api/auth/signUp").permitAll()
                     .anyRequest().authenticated();
         } else {
             registry.anyRequest().permitAll();
         }
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new UserDetailsServiceImpl();
     }
 }

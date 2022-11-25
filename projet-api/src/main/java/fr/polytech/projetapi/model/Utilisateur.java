@@ -1,16 +1,13 @@
 package fr.polytech.projetapi.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.math.BigDecimal;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "utilisateur")
 public class Utilisateur {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "num_util", nullable = false)
     private Integer id;
 
@@ -24,10 +21,16 @@ public class Utilisateur {
     private LocalDate dateNaissance;
 
     @Column(name = "taille", precision = 6, scale = 2)
-    private BigDecimal taille;
+    private double taille;
 
     @Column(name = "poids", precision = 6, scale = 2)
-    private BigDecimal poids;
+    private double poids;
+
+    @Column(name = "login", length = 255)
+    private String login;
+
+    @Column(name = "password", length = 255)
+    private String password;
 
     public Integer getId() {
         return id;
@@ -61,20 +64,35 @@ public class Utilisateur {
         this.dateNaissance = dateNaissance;
     }
 
-    public BigDecimal getTaille() {
+    public double getTaille() {
         return taille;
     }
 
-    public void setTaille(BigDecimal taille) {
+    public void setTaille(double taille) {
         this.taille = taille;
     }
 
-    public BigDecimal getPoids() {
+    public double getPoids() {
         return poids;
     }
 
-    public void setPoids(BigDecimal poids) {
+    public void setPoids(double poids) {
         this.poids = poids;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
