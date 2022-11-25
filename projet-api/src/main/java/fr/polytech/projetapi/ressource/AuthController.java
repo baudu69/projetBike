@@ -4,14 +4,13 @@ import fr.polytech.projetapi.config.JwtUtils;
 import fr.polytech.projetapi.dto.JwtResponse;
 import fr.polytech.projetapi.dto.LoginRequest;
 import fr.polytech.projetapi.dto.SignUpRequest;
+import fr.polytech.projetapi.model.Utilisateur;
 import fr.polytech.projetapi.service.UserDetailsServiceImpl;
+import fr.polytech.projetapi.service.UtilisateurService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,20 +22,22 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
     private final UserDetailsServiceImpl userDetailsService;
+    private final UtilisateurService utilisateurService;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtUtils jwtUtils, UserDetailsServiceImpl userDetailsService) {
+    public AuthController(AuthenticationManager authenticationManager, JwtUtils jwtUtils, UserDetailsServiceImpl userDetailsService, UtilisateurService utilisateurService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
         this.userDetailsService = userDetailsService;
+        this.utilisateurService = utilisateurService;
     }
 
     @PostMapping("/signIn")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password()));
         String jwt = jwtUtils.generateJwtToken(authentication);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Utilisateur utilisateur = this.utilisateurService.findByLogin(loginRequest.username()).orElseThrow(IllegalStateException::new);
         return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getUsername()));
+                utilisateur));
     }
 
     @PostMapping("/signUp")

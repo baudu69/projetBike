@@ -1,5 +1,7 @@
 package fr.polytech.projetapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -26,7 +28,7 @@ public class Utilisateur {
     @Column(name = "poids", precision = 6, scale = 2)
     private double poids;
 
-    @Column(name = "login", length = 255)
+    @Column(name = "login", length = 255, unique = true)
     private String login;
 
     @Column(name = "password", length = 255)

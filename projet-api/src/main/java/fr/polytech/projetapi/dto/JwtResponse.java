@@ -1,4 +1,6 @@
 package fr.polytech.projetapi.dto;
 
-public record JwtResponse(String jwt, String username) {
+import fr.polytech.projetapi.model.Utilisateur;
+
+public record JwtResponse(String jwt, Utilisateur user) {
 }

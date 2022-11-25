@@ -22,9 +22,9 @@ public class JwtUtils {
     }
 
     public String generateJwtToken(Authentication authentication) {
-        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return Jwts.builder()
-                .setSubject((userPrincipal.getUsername()))
+                .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(Date.from(LocalDateTime.now().plus(1, java.time.temporal.ChronoUnit.HOURS).atZone(ZoneId.systemDefault()).toInstant()))
                 .signWith(SignatureAlgorithm.HS512, this.bikeConfig.getSecret())
