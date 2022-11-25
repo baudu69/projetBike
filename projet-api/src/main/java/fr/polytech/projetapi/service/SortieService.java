@@ -4,6 +4,9 @@ import fr.polytech.projetapi.model.Etape;
 import fr.polytech.projetapi.model.Sortie;
 import fr.polytech.projetapi.repository.EtapeRepository;
 import fr.polytech.projetapi.repository.SortieRepository;
+import fr.polytech.projetapi.repository.UtilisateurRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +16,12 @@ import java.util.Optional;
 public class SortieService {
     private final SortieRepository sortieRepository;
     private final EtapeRepository etapeRepository;
+    private final UtilisateurRepository utilisateurRepository;
 
-    public SortieService(SortieRepository sortieRepository, EtapeRepository etapeRepository) {
+    public SortieService(SortieRepository sortieRepository, EtapeRepository etapeRepository, UtilisateurRepository utilisateurRepository) {
         this.sortieRepository = sortieRepository;
         this.etapeRepository = etapeRepository;
+        this.utilisateurRepository = utilisateurRepository;
     }
 
     public void deleteSortie(Integer id) {
@@ -52,5 +57,11 @@ public class SortieService {
 
     public void supprimerEtape(Integer idSortie, Integer numEtape) {
         etapeRepository.deleteBySortie_IdAndNumEtape(idSortie, numEtape);
+    }
+
+    public List<Sortie> getAllSortiesByUser(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        int userId = utilisateurRepository.findByLogin(userDetails.getUsername()).orElseThrow(IllegalStateException::new).getId();
+        return sortieRepository.findByNumUtil(userId);
     }
 }

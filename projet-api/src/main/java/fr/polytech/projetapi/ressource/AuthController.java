@@ -7,6 +7,8 @@ import fr.polytech.projetapi.dto.SignUpRequest;
 import fr.polytech.projetapi.model.Utilisateur;
 import fr.polytech.projetapi.service.UserDetailsServiceImpl;
 import fr.polytech.projetapi.service.UtilisateurService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,6 +25,7 @@ public class AuthController {
     private final JwtUtils jwtUtils;
     private final UserDetailsServiceImpl userDetailsService;
     private final UtilisateurService utilisateurService;
+    private final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     public AuthController(AuthenticationManager authenticationManager, JwtUtils jwtUtils, UserDetailsServiceImpl userDetailsService, UtilisateurService utilisateurService) {
         this.authenticationManager = authenticationManager;
@@ -33,6 +36,7 @@ public class AuthController {
 
     @PostMapping("/signIn")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+        logger.info("Authentification de l'utilisateur {}", loginRequest.username());
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password()));
         String jwt = jwtUtils.generateJwtToken(authentication);
         Utilisateur utilisateur = this.utilisateurService.findByLogin(loginRequest.username()).orElseThrow(IllegalStateException::new);
@@ -42,6 +46,7 @@ public class AuthController {
 
     @PostMapping("/signUp")
     public ResponseEntity<?> registerUser(@RequestBody SignUpRequest signUpRequest) {
+        logger.info("Inscription de l'utilisateur {}", signUpRequest.username());
         this.userDetailsService.signUp(signUpRequest);
         return ResponseEntity.noContent().build();
     }

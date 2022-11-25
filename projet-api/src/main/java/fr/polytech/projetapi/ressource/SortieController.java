@@ -7,6 +7,7 @@ import fr.polytech.projetapi.service.SortieService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -23,9 +24,9 @@ public class SortieController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Sortie>> getAllSorties() {
+    public ResponseEntity<List<Sortie>> getAllSorties(Authentication authentication) {
         logger.info("REST request to get all Sorties");
-        return ResponseEntity.ok(sortieService.getAllSorties());
+        return ResponseEntity.ok(sortieService.getAllSortiesByUser(authentication));
     }
 
     @GetMapping("/{idSortie}")
