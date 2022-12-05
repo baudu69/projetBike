@@ -1,1 +1,8 @@
-{{authService.username}} - {{authService.jwt}}
+<ng-container *ngIf="authService.isConnected | async">
+
+  <a routerLink="">Accueil</a>
+  <a routerLink="sortie">Sorties</a>
+
+  <a routerLink="logout" id="b-logout">Déconnexion</a>
+
+</ng-container>

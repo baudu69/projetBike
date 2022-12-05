@@ -3,6 +3,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 import {LoginService} from "./login.service";
 import {AuthService} from "../shared/service/auth.service";
 
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl('epul', [Validators.required])
   })
 
-  constructor(private loginService: LoginService, private authService: AuthService) { }
+  constructor(private loginService: LoginService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -34,7 +35,10 @@ export class LoginComponent implements OnInit {
   login() {
     this.loginService.login(this.formLogin.value.username, this.formLogin.value.password).subscribe(
       data => {
-        this.authService.majToken(data)
+        this.authService.majToken(data.username, data.jwt);
+        this.authService.isConnected.subscribe(value => {
+          if (value) this.router.navigate(['']);
+        })
       }
     );
   }
