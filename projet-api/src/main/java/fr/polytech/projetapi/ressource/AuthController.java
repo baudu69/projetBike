@@ -4,7 +4,9 @@ import fr.polytech.projetapi.config.JwtUtils;
 import fr.polytech.projetapi.dto.JwtResponse;
 import fr.polytech.projetapi.dto.LoginRequest;
 import fr.polytech.projetapi.dto.SignUpRequest;
+import fr.polytech.projetapi.model.Utilisateur;
 import fr.polytech.projetapi.service.UserDetailsServiceImpl;
+import io.jsonwebtoken.Claims;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,12 +33,11 @@ public class AuthController {
     }
 
     @PostMapping("/signIn")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<JwtResponse> authenticateUser(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password()));
-        String jwt = jwtUtils.generateJwtToken(authentication);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getUsername()));
+        Utilisateur user = userDetailsService.loadFullUserByUsername(loginRequest.username());
+        String jwt = jwtUtils.generateJwtToken(authentication, user);
+        return ResponseEntity.ok(new JwtResponse(jwt));
     }
 
     @PostMapping("/signUp")

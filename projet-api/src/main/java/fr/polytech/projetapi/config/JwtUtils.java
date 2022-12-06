@@ -1,5 +1,6 @@
 package fr.polytech.projetapi.config;
 
+import fr.polytech.projetapi.model.Utilisateur;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Map;
 
 @Component
 public class JwtUtils {
@@ -21,11 +23,11 @@ public class JwtUtils {
         this.bikeConfig = bikeConfig;
     }
 
-    public String generateJwtToken(Authentication authentication) {
-        UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+    public String generateJwtToken(Authentication authentication, Utilisateur user) {
         return Jwts.builder()
-                .setSubject((userPrincipal.getUsername()))
+                .setSubject((user.getLogin()))
                 .setIssuedAt(new Date())
+                .addClaims(Map.of("user", user))
                 .setExpiration(Date.from(LocalDateTime.now().plus(1, java.time.temporal.ChronoUnit.HOURS).atZone(ZoneId.systemDefault()).toInstant()))
                 .signWith(SignatureAlgorithm.HS512, this.bikeConfig.getSecret())
                 .compact();
@@ -53,3 +55,5 @@ public class JwtUtils {
         return false;
     }
 }
+
+

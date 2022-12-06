@@ -26,6 +26,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username)));
 	}
 
+	public Utilisateur loadFullUserByUsername(String username) throws UsernameNotFoundException {
+		return userRepository.findByLogin(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+	}
+
 	public void signUp(SignUpRequest signUpRequest) {
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setLogin(signUpRequest.username());
