@@ -1,0 +1,44 @@
+<table mat-table [dataSource]="sorties">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let sortie">{{sortie.id}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="utilisateur">
+    <th mat-header-cell *matHeaderCellDef>Utilisateur</th>
+    <td mat-cell *matCellDef="let sortie">utilisateur</td>
+  </ng-container>
+
+  <ng-container matColumnDef="dateSortie">
+    <th mat-header-cell *matHeaderCellDef>Date de la sortie</th>
+    <td mat-cell *matCellDef="let sortie">{{sortie.dateSortie}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="lieuDepart">
+    <th mat-header-cell *matHeaderCellDef>Lieu de départ</th>
+    <td mat-cell *matCellDef="let sortie">{{sortie.lieuDepart}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="heureDepart">
+    <th mat-header-cell *matHeaderCellDef>Heure de départ</th>
+    <td mat-cell *matCellDef="let sortie">{{sortie.heureDepart}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="heureArrivee">
+    <th mat-header-cell *matHeaderCellDef>Heure d'arrivée</th>
+    <td mat-cell *matCellDef="let sortie">{{sortie.heureArrivee}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="distanceParcourue">
+    <th mat-header-cell *matHeaderCellDef>Distance parcourue</th>
+    <td mat-cell *matCellDef="let sortie">{{sortie.distanceParcourue}}</td>
+  </ng-container>
+  
+  <ng-container matColumnDef="view">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let sortie"><button mat-button routerLink="/sortie/{{sortie.id}}">Voir</button></td>
+  </ng-container>
+  
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

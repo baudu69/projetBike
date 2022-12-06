@@ -7,10 +7,12 @@ import java.util.Collection;
 
 public class UserDetailsImpl implements UserDetails {
 	private final String username;
+	private final String password;
 
 
 	public UserDetailsImpl(Utilisateur utilisateur) {
 		this.username = utilisateur.getLogin();
+		this.password = utilisateur.getPassword();
 	}
 
 
@@ -21,7 +23,7 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return null;
+		return this.password;
 	}
 
 	@Override

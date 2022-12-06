@@ -38,8 +38,12 @@ public class WebSecurityConfig {
 
 
     @Bean
-    public AuthenticationManager authenticationManagerBean() {
-        return authentication -> new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials());
+    public AuthenticationManager authenticationManagerBean(HttpSecurity http, UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder)
+                .and()
+                .build();
     }
 
     @Bean
