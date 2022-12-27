@@ -8,11 +8,13 @@ import java.util.Collection;
 public class UserDetailsImpl implements UserDetails {
 	private final String username;
 	private final String password;
+	private int numUtil;
 
 
 	public UserDetailsImpl(Utilisateur utilisateur) {
 		this.username = utilisateur.getLogin();
 		this.password = utilisateur.getPassword();
+		this.numUtil = utilisateur.getId();
 	}
 
 
@@ -49,5 +51,9 @@ public class UserDetailsImpl implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public int getNumUtil() {
+		return numUtil;
 	}
 }

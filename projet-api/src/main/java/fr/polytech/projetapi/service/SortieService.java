@@ -40,7 +40,8 @@ public class SortieService {
         sortieRepository.save(sortie);
     }
 
-    public void addSortie(Sortie sortie) {
+    public void addSortie(Sortie sortie, int numUtilisateur) {
+        sortie.setNumUtil(numUtilisateur);
         sortieRepository.save(sortie);
     }
 

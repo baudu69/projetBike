@@ -3,6 +3,8 @@ package fr.polytech.projetapi.ressource;
 
 import fr.polytech.projetapi.model.Etape;
 import fr.polytech.projetapi.model.Sortie;
+import fr.polytech.projetapi.model.UserDetailsImpl;
+import fr.polytech.projetapi.model.Utilisateur;
 import fr.polytech.projetapi.service.SortieService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,9 +38,10 @@ public class SortieController {
     }
 
     @PostMapping
-    public ResponseEntity<Sortie> createSortie(@RequestBody Sortie sortie) {
+    public ResponseEntity<Sortie> createSortie(@RequestBody Sortie sortie, Authentication authentication) {
         logger.info("REST request to create Sortie");
-        sortieService.addSortie(sortie);
+        UserDetailsImpl utilisateur = (UserDetailsImpl) authentication.getPrincipal();
+        sortieService.addSortie(sortie, utilisateur.getNumUtil());
         return ResponseEntity.ok(sortie);
     }
 
