@@ -52,28 +52,11 @@ public class SortieController {
         return ResponseEntity.ok(sortie);
     }
 
-    @PostMapping("/{idSortie}/etape")
-    public ResponseEntity<Sortie> ajouterEtape(@PathVariable Integer idSortie, @RequestBody Etape etape) {
-        logger.info("REST request to add Etape to Sortie");
-        sortieService.ajouterEtape(idSortie, etape);
-        return ResponseEntity.noContent().build();
-    }
-
     @DeleteMapping("/{idSortie}")
     @Transactional
     public ResponseEntity<Void> deleteSortie(@PathVariable Integer idSortie) {
         logger.info("REST request to delete Sortie");
         sortieService.deleteSortie(idSortie);
-        return ResponseEntity.noContent().build();
-    }
-
-
-
-    @DeleteMapping("/{idSortie}/etape/{numEtape}")
-    @Transactional
-    public ResponseEntity<Void> supprimerEtape(@PathVariable Integer idSortie, @PathVariable Integer numEtape) {
-        logger.info("REST request to delete Etape from Sortie");
-        sortieService.supprimerEtape(idSortie, numEtape);
         return ResponseEntity.noContent().build();
     }
 }

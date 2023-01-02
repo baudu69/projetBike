@@ -1,10 +1,14 @@
 package fr.polytech.projetapi.model;
 
+import org.springframework.core.annotation.Order;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,17 +35,14 @@ public class Sortie {
     private String lieuDepart;
 
     @Column(name = "distance_parcourue", precision = 6, scale = 2)
-    private BigDecimal distanceParcourue;
+    private Double distanceParcourue;
 
-    @OneToMany(mappedBy = "sortie")
-    private Set<Etape> etapes = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "sortie", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("numEtape ASC")
+    private List<Etape> etapes = new ArrayList<>();
 
-    public Set<Etape> getEtapes() {
+    public List<Etape> getEtapes() {
         return etapes;
-    }
-
-    public void setEtapes(Set<Etape> etapes) {
-        this.etapes = etapes;
     }
 
 
@@ -93,11 +94,11 @@ public class Sortie {
         this.lieuDepart = lieuDepart;
     }
 
-    public BigDecimal getDistanceParcourue() {
+    public Double getDistanceParcourue() {
         return distanceParcourue;
     }
 
-    public void setDistanceParcourue(BigDecimal distanceParcourue) {
+    public void setDistanceParcourue(Double distanceParcourue) {
         this.distanceParcourue = distanceParcourue;
     }
 

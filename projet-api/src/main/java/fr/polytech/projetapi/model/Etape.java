@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "etape")
@@ -22,12 +23,22 @@ public class Etape {
     @Column(name = "longitude", precision = 16, scale = 14)
     private BigDecimal longitude;
 
-    @Column(name = "num_sortie", nullable = false)
+    @Column(name = "num_sortie", nullable = false, insertable = false, updatable = false)
     private Integer numSortie;
+
+    @Column(name = "distance_from_previous")
+    private Double distanceFromPrevious;
+
+    @Column(name = "heure_etape")
+    private LocalTime heureEtape;
+
+    @Column(name = "vitesse_moyenne_from_previous")
+    private Double vitesseMoyenneFromPrevious;
+
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "num_sortie", insertable = false, updatable = false)
+    @JoinColumn(name = "num_sortie")
     private Sortie sortie;
 
     public Sortie getSortie() {
@@ -76,5 +87,29 @@ public class Etape {
 
     public void setNumSortie(Integer numSortie) {
         this.numSortie = numSortie;
+    }
+
+    public Double getDistanceFromPrevious() {
+        return distanceFromPrevious;
+    }
+
+    public void setDistanceFromPrevious(Double distanceFromPrevious) {
+        this.distanceFromPrevious = distanceFromPrevious;
+    }
+
+    public LocalTime getHeureEtape() {
+        return heureEtape;
+    }
+
+    public void setHeureEtape(LocalTime heureEtape) {
+        this.heureEtape = heureEtape;
+    }
+
+    public Double getVitesseMoyenneFromPrevious() {
+        return vitesseMoyenneFromPrevious;
+    }
+
+    public void setVitesseMoyenneFromPrevious(Double vitesseMoyenneFromPrevious) {
+        this.vitesseMoyenneFromPrevious = vitesseMoyenneFromPrevious;
     }
 }
