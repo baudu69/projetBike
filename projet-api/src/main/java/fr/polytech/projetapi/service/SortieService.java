@@ -42,7 +42,11 @@ public class SortieService {
 
     public void addSortie(Sortie sortie, int numUtilisateur) {
         sortie.setNumUtil(numUtilisateur);
-        sortieRepository.save(sortie);
+        Sortie sortieSaved = sortieRepository.save(sortie);
+        sortie.getEtapes().stream().sorted((s1, s2) -> s1.getNumEtape() > s2.getNumEtape()?1:-1).forEach(etape -> {
+            etape.setNumSortie(sortieSaved.getId());
+            etapeRepository.save(etape);
+        });
     }
 
     public void ajouterEtape(Integer idSortie, Etape etape) {

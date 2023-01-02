@@ -16,9 +16,6 @@ public class Etape {
     @Column(name = "num_etape", nullable = false)
     private Integer numEtape;
 
-    @Column(name = "nom_etape", length = 25)
-    private String nomEtape;
-
     @Column(name = "latitude", precision = 16, scale = 14)
     private BigDecimal latitude;
 
@@ -55,14 +52,6 @@ public class Etape {
 
     public void setNumEtape(Integer numEtape) {
         this.numEtape = numEtape;
-    }
-
-    public String getNomEtape() {
-        return nomEtape;
-    }
-
-    public void setNomEtape(String nomEtape) {
-        this.nomEtape = nomEtape;
     }
 
     public BigDecimal getLatitude() {
