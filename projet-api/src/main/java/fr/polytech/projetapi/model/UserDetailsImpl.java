@@ -8,7 +8,7 @@ import java.util.Collection;
 public class UserDetailsImpl implements UserDetails {
 	private final String username;
 	private final String password;
-	private int numUtil;
+	private final int numUtil;
 
 
 	public UserDetailsImpl(Utilisateur utilisateur) {
