@@ -38,4 +38,9 @@ public class UtilisateurService {
         }
         this.utilisateurRepository.save(base);
     }
+
+    public Utilisateur getUtilisateur(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return this.utilisateurRepository.findByLogin(userDetails.getUsername()).orElseThrow(IllegalStateException::new);
+    }
 }

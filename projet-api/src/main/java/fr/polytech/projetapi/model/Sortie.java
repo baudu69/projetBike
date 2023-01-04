@@ -1,15 +1,11 @@
 package fr.polytech.projetapi.model;
 
-import org.springframework.core.annotation.Order;
-
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
 
 @Entity
 @Table(name = "sortie")
@@ -102,4 +98,16 @@ public class Sortie {
         this.distanceParcourue = distanceParcourue;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sortie sortie = (Sortie) o;
+        return Objects.equals(numUtil, sortie.numUtil) && Objects.equals(dateSortie, sortie.dateSortie) && Objects.equals(heureDepart, sortie.heureDepart) && Objects.equals(heureArrivee, sortie.heureArrivee) && Objects.equals(lieuDepart, sortie.lieuDepart) && Objects.equals(distanceParcourue, sortie.distanceParcourue) && Objects.equals(etapes, sortie.etapes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numUtil, dateSortie, heureDepart, heureArrivee, lieuDepart, distanceParcourue, etapes);
+    }
 }
