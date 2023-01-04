@@ -39,6 +39,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		utilisateur.setPassword(this.passwordEncoder.encode(signUpRequest.password()));
 		utilisateur.setPoids(signUpRequest.poids());
 		utilisateur.setTaille(signUpRequest.taille());
+		utilisateur.setDateNaissance(signUpRequest.birthdate());
 
 		userRepository.save(utilisateur);
 	}
