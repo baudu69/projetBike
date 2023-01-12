@@ -22,7 +22,7 @@ import { LogoutComponent } from './logout/logout.component';
     SortieComponent,
     SortieListComponent,
     AccueilComponent,
-    LogoutComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

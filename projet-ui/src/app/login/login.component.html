@@ -9,4 +9,5 @@
     <input matInput type="password" formControlName="password">
   </mat-form-field>
   <button (click)="login()" [disabled]="!formLogin.valid" mat-raised-button color="primary">Se connecter</button>
+  <button mat-raised-button color="primary" routerLink="/signup">Inscription</button>
 </ng-form>

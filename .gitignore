@@ -2,3 +2,6 @@
 /.idea/
 /gradle/
 /projet-ui/.vscode/
+/projet-ui/.angular/
+/projet-ui/.gradle/
+/projet-ui/build/
