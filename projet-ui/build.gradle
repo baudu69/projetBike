@@ -1,0 +1,16 @@
+plugins {
+  id 'java'
+  id "com.github.node-gradle.node" version "3.5.1"
+}
+
+node {
+  version = '18.13.0'
+  npmVersion = '9.2.0'
+  download = true
+}
+
+jar.dependsOn(npm_run_build)
+
+jar {
+  from 'dist/projet-ui' into 'static'
+}

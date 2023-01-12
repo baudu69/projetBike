@@ -58,9 +58,9 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests();
         if (bikeConfig.isSecurityEnabled()) {
-            registry.antMatchers("/swagger-ui/**", "/v3/**").permitAll()
-                    .antMatchers("/api/auth/signIn", "/api/auth/signUp").permitAll()
-                    .anyRequest().authenticated();
+            registry.antMatchers("/api/auth/signIn", "/api/auth/signUp").permitAll()
+                    .antMatchers("/api/**").authenticated()
+                    .anyRequest().permitAll();
         } else {
             registry.anyRequest().permitAll();
         }
