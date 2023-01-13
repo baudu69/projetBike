@@ -10,13 +10,13 @@ import {SortieService} from "../shared/service/sortie.service";
 export class SortieListComponent implements OnInit {
 
   sorties: ISortie[] = [];
-  displayedColumns: string[] = ['id', 'utilisateur', 'dateSortie', 'lieuDepart', 'heureDepart', 'heureArrivee', 'distanceParcourue', 'view'];
+  displayedColumns: string[] = ['dateSortie', 'lieuDepart', 'heureDepart', 'heureArrivee', 'distanceParcourue', 'view'];
 
   constructor(private sortieService: SortieService) { }
 
   ngOnInit(): void {
     this.sortieService.getAllSorties().subscribe((sorties: ISortie[]) => {
-      this.sorties = sorties;
+      this.sorties = sorties.sort((a, b) => new Date(a.dateSortie).getTime() - new Date(b.dateSortie).getTime());
     });
   }
 

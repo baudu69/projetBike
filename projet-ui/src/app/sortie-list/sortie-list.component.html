@@ -31,14 +31,14 @@
 
   <ng-container matColumnDef="distanceParcourue">
     <th mat-header-cell *matHeaderCellDef>Distance parcourue</th>
-    <td mat-cell *matCellDef="let sortie">{{sortie.distanceParcourue}}</td>
+    <td mat-cell *matCellDef="let sortie">{{sortie.distanceParcourue}} km</td>
   </ng-container>
-  
+
   <ng-container matColumnDef="view">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let sortie"><button mat-button routerLink="/sortie/{{sortie.id}}">Voir</button></td>
   </ng-container>
-  
+
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
