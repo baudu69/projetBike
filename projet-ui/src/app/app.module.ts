@@ -15,6 +15,7 @@ import { SortieListComponent } from './sortie-list/sortie-list.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { LogoutComponent } from './logout/logout.component';
 import {MatIconModule} from "@angular/material/icon";
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {MatIconModule} from "@angular/material/icon";
     SortieComponent,
     SortieListComponent,
     AccueilComponent,
-    LogoutComponent
+    LogoutComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

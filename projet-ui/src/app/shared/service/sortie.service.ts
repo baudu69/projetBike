@@ -19,7 +19,7 @@ export class SortieService {
     return this.http.get<ISortie>('/api/sortie/' + sortieId);
   }
 
-  deleteSortieById(sortieId: number) {
+  deleteSortieById(sortieId: number): Observable<void> {
     return this.http.delete<void>('/api/sortie/' + sortieId);
   }
 
