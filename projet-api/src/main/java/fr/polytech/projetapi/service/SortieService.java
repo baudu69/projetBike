@@ -1,5 +1,6 @@
 package fr.polytech.projetapi.service;
 
+import fr.polytech.projetapi.exception.SortieNotFoundException;
 import fr.polytech.projetapi.model.Etape;
 import fr.polytech.projetapi.model.Sortie;
 import fr.polytech.projetapi.repository.SortieRepository;
@@ -25,7 +26,9 @@ public class SortieService {
     }
 
     public void deleteSortie(Integer id) {
-        sortieRepository.deleteById(id);
+        final Sortie sortie = sortieRepository.findById(id)
+                .orElseThrow(() -> new SortieNotFoundException(id));
+        sortieRepository.delete(sortie);
     }
 
     public Optional<Sortie> getSortieByID(Integer id) {

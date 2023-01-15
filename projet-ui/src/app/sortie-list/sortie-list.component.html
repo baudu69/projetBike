@@ -36,7 +36,12 @@
 
   <ng-container matColumnDef="view">
     <th mat-header-cell *matHeaderCellDef></th>
-    <td mat-cell *matCellDef="let sortie"><button mat-button routerLink="/sortie/{{sortie.id}}">Voir</button></td>
+    <td mat-cell *matCellDef="let sortie">
+      <div class="controls">
+        <button mat-raised-button routerLink="/sortie/{{sortie.id}}">Voir</button>
+        <button mat-raised-button mat-icon-button color="warn" (click)="delete(sortie.id)"><mat-icon>delete_forever</mat-icon></button>
+      </div>
+    </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

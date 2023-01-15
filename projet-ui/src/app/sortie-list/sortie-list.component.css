@@ -9,3 +9,12 @@ table {
 td {
 	text-align: center;
 }
+
+.controls {
+	display: inline-flex;
+	gap: .5rem;
+}
+
+.mat-icon-button {
+	border-radius: 4px;
+}

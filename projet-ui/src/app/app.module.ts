@@ -14,6 +14,7 @@ import { SortieComponent } from './sortie/sortie.component';
 import { SortieListComponent } from './sortie-list/sortie-list.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { LogoutComponent } from './logout/logout.component';
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { LogoutComponent } from './logout/logout.component';
     HttpClientModule,
     RouterModule.forRoot(routes),
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [
     {
