@@ -5,9 +5,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.text.MessageFormat;
 
-public class SortieNotFoundException extends RuntimeException{
+public class SortieNotFoundException extends ResponseStatusException {
+
     public SortieNotFoundException(Integer id) {
-        super(MessageFormat.format("Sortie {0} not found", id));
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, this.getMessage());
+        super(HttpStatus.NOT_FOUND, MessageFormat.format("Sortie {0} not found", id));
     }
+
 }

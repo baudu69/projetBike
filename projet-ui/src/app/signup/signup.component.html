@@ -1,0 +1,39 @@
+<form [formGroup]="formSignUp">
+  <h1>Inscription</h1>
+  <mat-form-field appearance="fill">
+    <mat-label>Nom</mat-label>
+    <input matInput formControlName="lastname">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Prenom</mat-label>
+    <input matInput formControlName="firstname">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Nom d'utilisateur</mat-label>
+    <input matInput formControlName="username">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Mot de passe</mat-label>
+    <input matInput type="password" formControlName="password">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Confirmation du mot de passe</mat-label>
+    <input matInput type="password" formControlName="passwordConfirm">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Taille (cm)</mat-label>
+    <input matInput type="number" step="0.1" min="0" formControlName="taille">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Poids (kg)</mat-label>
+    <input matInput type="number" step="0.1" min="0" formControlName="poids">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Date de naissance</mat-label>
+    <input matInput [matDatepicker]="picker">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <button (click)="valid()" [disabled]="!formSignUp.valid" color="primary" mat-raised-button>Inscrire</button>
+</form>

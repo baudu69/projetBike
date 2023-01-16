@@ -1,10 +1,9 @@
-ng-form {
+form {
   display: flex;
   flex-direction: column;
   width: 40%;
   gap: 10px;
 }
-
 :host {
   display: flex;
   justify-content: center;

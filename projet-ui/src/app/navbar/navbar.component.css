@@ -9,7 +9,7 @@ a {
 	padding: 10px;
 	border-radius: 5px;
 	display: block;
-	
+
 	margin: .25rem;
 }
 
@@ -17,6 +17,6 @@ a:hover {
 	background-color: #8BBECF;
 }
 
-#b-logout {
+#spacer {
 	margin-left: auto;
 }

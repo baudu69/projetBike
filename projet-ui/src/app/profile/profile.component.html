@@ -1,0 +1,26 @@
+<div>
+  <table>
+    <tbody>
+      <tr>
+        <th>Nom</th>
+        <td>{{user?.nomUtil}}</td>
+      </tr>
+      <tr>
+        <th>Prénom</th>
+        <td>{{user?.prenomUtil}}</td>
+      </tr>
+      <tr>
+        <th>Date de naissance</th>
+        <td>{{user?.dateNaissance | date:'longDate':undefined:'fr-FR'}}</td>
+      </tr>
+      <tr>
+        <th>Taille</th>
+        <td>{{user?.taille}} cm</td>
+      </tr>
+      <tr>
+        <th>Poids</th>
+        <td>{{user?.poids}} kg</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

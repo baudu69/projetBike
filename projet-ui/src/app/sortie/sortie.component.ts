@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Icon, LatLng, Map, Marker, Polyline, Popup, TileLayer} from 'leaflet';
 import {ISortie} from "../shared/model/isortie";
 import {SortieService} from "../shared/service/sortie.service";
+import {IEtape} from "../shared/model/ietape";
 
 @Component({
   selector: 'app-sortie',
@@ -49,13 +50,11 @@ export class SortieComponent implements OnInit {
             latlngs[i] = new LatLng(coords[i].latitude, coords[i].longitude);
             let marker = new Marker(latlngs[i]);
             marker.setIcon(new Icon({
-              iconUrl: 'assets/marker-icon-2x.png',
-              iconAnchor: [12, 40],
-              iconSize: [24, 40],
+              iconUrl: 'assets/etape.png',
+              iconSize: [9, 9],
             }));
             marker.bindPopup(new Popup({
-              offset: [0, -20],
-              content: coords[i].nomEtape,
+              content: this.popupHtml(coords[i]),
             }));
             marker.addTo(this.map!);
           }
@@ -65,6 +64,20 @@ export class SortieComponent implements OnInit {
         },
       });
     });
+
+    setTimeout(() => this.map?.invalidateSize(), 0);
+  }
+
+  private popupHtml(etape: IEtape): string {
+    let ret = ``;
+
+    if (etape.numEtape == this.sortie?.etapes.length) ret += `<div>Arrivée</div>`;
+    else if (etape.numEtape == 1) ret += `<div>Départ</div>`;
+
+    ret += `<div>Étape ${etape.numEtape}</div>`;
+    ret += `<div>Heure : ${etape.heureEtape}</div>`;
+
+    return ret;
   }
 
 }

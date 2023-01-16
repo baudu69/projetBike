@@ -1,0 +1,9 @@
+table {
+	margin: 5rem auto 0;
+	border-spacing: 1rem;
+}
+
+th {
+	font-weight: normal;
+	text-align: right;
+}
