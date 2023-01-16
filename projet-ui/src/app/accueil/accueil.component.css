@@ -1,0 +1,22 @@
+h1 {
+	text-align: center;
+	font-size: 5em;
+	line-height: normal;
+	font-weight: bold;
+}
+
+#fonctionnalites * {
+	margin: 0;
+}
+
+button {
+	margin: auto;
+	display: block;
+	margin-top: 1rem;
+}
+
+#equipe {
+	margin-top: 2rem;
+	text-align: center;
+	font-size: 2em;
+}

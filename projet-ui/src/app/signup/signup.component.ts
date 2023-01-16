@@ -19,6 +19,7 @@ import {SignupModel} from "./signup.model";
 import {MatDialog} from "@angular/material/dialog";
 import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-signup',
@@ -77,18 +78,14 @@ export class SignupComponent implements OnInit {
       birthdate: this.formSignUp.controls['birthdate'].value,
     }
     this.signUpService.signup(formSignupModel).subscribe({
-        next: (response) => {
-          if (!response.ok) {
-            this.matSnackBar.open("Erreur lors de l'inscription", "Fermer", {duration: 2000});
-            return
-          }
-          this.matSnackBar.open("Inscription réussie", "Fermer", {duration: 2000});
-          this.router.navigate(['/login']);
-        },
-      error: (error) => {
+      next: (response) => {
+        this.matSnackBar.open("Inscription réussie", "Fermer", {duration: 2000});
+        this.router.navigate(['/login']);
+      },
+      error: (error: HttpErrorResponse) => {
         console.log(error);
-      }
-      }
-    );
+        this.matSnackBar.open("Erreur lors de l'inscription", "Fermer", {duration: 2000});
+      },
+    });
   }
 }
