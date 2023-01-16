@@ -10,13 +10,18 @@ h1 {
 }
 
 button {
-	margin: auto;
-	display: block;
-	margin-top: 1rem;
+  display: block;
+  margin: 1rem auto auto;
 }
 
 #equipe {
-	margin-top: 2rem;
-	text-align: center;
-	font-size: 2em;
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 2em;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
